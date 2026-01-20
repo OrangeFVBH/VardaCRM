@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText android:id="@+id/etName" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Название группы" />
+        <EditText android:id="@+id/etCoach" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Тренер" />
+        <EditText android:id="@+id/etSchedule" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Расписание" />
+
+        <LinearLayout android:id="@+id/layoutAddStudent" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:background="#F0F0F0" android:padding="8dp" android:layout_marginTop="10dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Добавить ученика:" android:textStyle="bold" />
+            <EditText android:id="@+id/etStudentName" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Имя ученика" />
+            <EditText android:id="@+id/etStudentPhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Телефон" android:inputType="phone" />
+            <Button android:id="@+id/btnAddStudentAction" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Добавить в список" />
+        </LinearLayout>
+
+        <Button android:id="@+id/btnConfirm" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Подтвердить" />
+        <Button android:id="@+id/btnCancel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Отмена" />
+    </LinearLayout>
+</ScrollView>
