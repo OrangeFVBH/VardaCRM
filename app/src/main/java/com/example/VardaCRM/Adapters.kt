@@ -58,9 +58,19 @@ class StudentAdapter(private var list: List<Student>, private val onClick: (Stud
     }
 
     override fun onBindViewHolder(h: VH, pos: Int) {
-        val i = list[pos]
-        (h.itemView as TextView).text = i.name
-        h.itemView.setOnClickListener { onClick(i) }
+        val student = list[pos]
+        val textView = h.itemView as TextView
+        textView.text = student.name
+
+        // Если должник — красим в красный
+        if (student.isDebtor()) {
+            textView.setTextColor(android.graphics.Color.RED)
+            textView.text = "${student.name} (ДОЛГ)"
+        } else {
+            textView.setTextColor(android.graphics.Color.BLACK)
+        }
+
+        h.itemView.setOnClickListener { onClick(student) }
     }
 
     override fun getItemCount() = list.size

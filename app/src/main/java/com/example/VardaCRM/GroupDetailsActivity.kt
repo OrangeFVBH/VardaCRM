@@ -5,40 +5,68 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 
 class GroupDetailsActivity : AppCompatActivity() {
-    private var gId: Int = -1
+    private lateinit var group: Group
     private lateinit var rv: RecyclerView
+    private lateinit var adapter: StudentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_group_details)
 
-        gId = intent.getIntExtra("G_ID", -1)
-        val group = DataManager.groups.find { it.id == gId } ?: return
+        // Получаем объект группы из Intent
+        val receivedGroup = intent.getSerializableExtra("GROUP_OBJECT") as? Group
+        if (receivedGroup == null) {
+            finish()
+            return
+        }
+        group = receivedGroup
 
         findViewById<TextView>(R.id.tvDetailTitle).text = group.name
+
         rv = findViewById(R.id.studentsRecyclerView)
         rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = StudentAdapter(group.students) { student ->
+
+        // Настраиваем адаптер
+        adapter = StudentAdapter(group.students) { student ->
             val intent = Intent(this, StudentDetailsActivity::class.java)
-            intent.putExtra("G_ID", gId)
-            intent.putExtra("S_ID", student.id)
+            intent.putExtra("STUDENT_OBJECT", student)
+            intent.putExtra("G_ID", group.id) // Передаем ID группы для обновлений
             startActivity(intent)
         }
+        rv.adapter = adapter
 
         findViewById<Button>(R.id.btnEditGroup).setOnClickListener {
             val intent = Intent(this, EditGroupActivity::class.java)
-            intent.putExtra("G_ID", gId)
+            intent.putExtra("GROUP_OBJECT", group)
             startActivity(intent)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val group = DataManager.groups.find { it.id == gId }
-        (rv.adapter as? StudentAdapter)?.updateData(group?.students ?: mutableListOf())
+        // При возвращении на экран лучше обновить данные с сервера
+        loadLatestStudents()
+    }
+
+    private fun loadLatestStudents() {
+        lifecycleScope.launch {
+            try {
+                // В ApiService должен быть метод getGroups, найдем нашу группу там
+                val groups = RetrofitClient.api.getGroups()
+                val updatedGroup = groups.find { it.id == group.id }
+                updatedGroup?.let {
+                    group = it
+                    adapter.updateData(it.students)
+                }
+            } catch (e: Exception) {
+                // Если нет сети, работаем с тем, что есть
+            }
+        }
     }
 }

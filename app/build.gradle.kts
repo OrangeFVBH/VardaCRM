@@ -6,18 +6,17 @@ plugins {
 
 android {
     namespace = "com.example.VardaCRM"
-    compileSdk {
-        version = release(36)
-    }
+    // Поднимаем версию компиляции до 36, как просят ошибки
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.crm"
+        applicationId = "com.example.VardaCRM"
         minSdk = 26
-        targetSdk = 36
+        // targetSdk можно оставить 34 или тоже поднять до 36
+        // (но тогда нужно проверить приложение на совместимость с Android 16)
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -33,9 +32,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
         viewBinding = true
@@ -62,4 +63,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("io.coil-kt:coil:2.5.0")
 }

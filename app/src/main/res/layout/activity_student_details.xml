@@ -8,9 +8,14 @@
     <TextView android:id="@+id/tvStName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="22sp" android:textStyle="bold" />
     <TextView android:id="@+id/tvStPhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="18sp" />
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Дата последней оплаты:" android:layout_marginTop="20dp" />
-    <EditText android:id="@+id/etPaymentDate" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Например: 12.01.2024" android:inputType="text" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Дата последней оплаты:" android:layout_marginTop="10dp" />
+    <EditText android:id="@+id/etPaymentDate" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="12.01.2024" android:inputType="text" />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Абонемент до:" android:layout_marginTop="10dp" />
+    <EditText android:id="@+id/etSubEndDate" android:layout_width="match_parent" android:layout_height="wrap_content" android:focusable="false" android:hint="ГГГГ-ММ-ДД" />
+
+    <Button android:id="@+id/btnSelectDate" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Выбрать дату окончания" />
 
     <Button android:id="@+id/btnBack" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Вернуться" />
-    <Button android:id="@+id/btnDelete" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Удалить занимающегося" android:backgroundTint="#D32F2F" android:textColor="#FFFFFF" />
+    <Button android:id="@+id/btnDelete" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Удалить" android:backgroundTint="#D32F2F" android:textColor="#FFFFFF" />
 </LinearLayout>
