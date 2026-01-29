@@ -1,22 +1,5 @@
 {
-    "groups": [
-        {
-            "id": 1,
-            "name": "аопоаоала",
-            "coach": "аоатаоалоа",
-            "schedule": "ататалелшалаа",
-            "students": [
-                {
-                    "id": 1,
-                    "name": "аоаллала",
-                    "phoneNumber": "46258284646",
-                    "lastPaymentDate": "",
-                    "subEndDate": "2025-01-01",
-                    "photoUrl": null
-                }
-            ]
-        }
-    ],
-    "g_id": 2,
-    "s_id": 2
+    "groups": [],
+    "g_id": 7,
+    "s_id": 7
 }
