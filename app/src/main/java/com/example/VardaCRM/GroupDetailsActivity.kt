@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,20 @@ class GroupDetailsActivity : AppCompatActivity() {
             intent.putExtra("GROUP_OBJECT", group)
             startActivity(intent)
         }
+
+        val btnDeleteGroup = findViewById<Button>(R.id.btnDeleteGroup)
+
+        btnDeleteGroup.setOnClickListener {
+            // Рекомендуется добавить подтверждение удаления
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Удаление группы")
+                .setMessage("Вы уверены, что хотите удалить группу ${group.name}?")
+                .setPositiveButton("Да") { _, _ ->
+                    deleteGroupFromServer(group.id)
+                }
+                .setNegativeButton("Отмена", null)
+                .show()
+        }
     }
 
     override fun onResume() {
@@ -66,6 +81,18 @@ class GroupDetailsActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 // Если нет сети, работаем с тем, что есть
+            }
+        }
+    }
+
+    private fun deleteGroupFromServer(groupId: Int) {
+        lifecycleScope.launch {
+            try {
+                RetrofitClient.api.deleteGroup(groupId) //
+                Toast.makeText(this@GroupDetailsActivity, "Группа удалена", Toast.LENGTH_SHORT).show()
+                finish() // Возвращаемся на главный экран
+            } catch (e: Exception) {
+                Toast.makeText(this@GroupDetailsActivity, "Ошибка при удалении: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }

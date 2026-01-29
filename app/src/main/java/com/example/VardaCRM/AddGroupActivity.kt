@@ -26,6 +26,9 @@ class AddGroupActivity : AppCompatActivity() {
                         finish()
                     } catch (e: Exception) {
                         Toast.makeText(this@AddGroupActivity, "Ошибка сохранения", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        val errorMsg = if (e.message?.contains("400") == true) "Группа уже существует!" else "Ошибка сохранения"
+                        Toast.makeText(this@AddGroupActivity, errorMsg, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

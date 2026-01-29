@@ -52,15 +52,62 @@ class StudentDetailsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnDelete).setOnClickListener {
             Toast.makeText(this, "Функция удаления в разработке", Toast.LENGTH_SHORT).show()
         }
+
+        val btnDelete = findViewById<Button>(R.id.btnDelete)
+
+        btnDelete.setOnClickListener {
+            // Создаем диалог подтверждения
+            androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Удаление ученика")
+                .setMessage("Вы точно хотите удалить ученика ${student.name}?")
+                .setPositiveButton("Удалить") { _, _ ->
+                    performStudentDeletion(groupId, student.id)
+                }
+                .setNegativeButton("Отмена", null)
+                .show()
+        }
+
+    }
+    private fun addNewStudentToServer(groupId: Int, name: String, phone: String) {
+        val newStudent = Student(id = 0, name = name, phoneNumber = phone)
+
+        lifecycleScope.launch {
+            try {
+                val createdStudent = RetrofitClient.api.addStudent(groupId, newStudent)
+                Toast.makeText(this@StudentDetailsActivity, "Ученик добавлен!", Toast.LENGTH_SHORT).show()
+                // Обновите список на экране или закройте форму
+            } catch (e: Exception) {
+                // Если здесь вылетает 404 — проверьте пункт 1
+                Toast.makeText(this@StudentDetailsActivity, "Ошибка сети: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun saveStudentChanges(groupId: Int, student: Student) {
         lifecycleScope.launch {
             try {
-                // В идеале тут RetrofitClient.api.updateStudent(groupId, student)
-                Toast.makeText(this@StudentDetailsActivity, "Дата обновлена", Toast.LENGTH_SHORT).show()
+                // Теперь вызываем метод PUT
+                RetrofitClient.api.updateStudent(groupId, student.id, student)
+                Toast.makeText(this@StudentDetailsActivity, "Данные обновлены", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
-                Toast.makeText(this@StudentDetailsActivity, "Ошибка сохранения", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@StudentDetailsActivity, "Ошибка сохранения: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun performStudentDeletion(groupId: Int, studentId: Int) {
+        if (groupId == -1) {
+            Toast.makeText(this, "Ошибка: ID группы не определен", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            try {
+                RetrofitClient.api.deleteStudent(groupId, studentId)
+                Toast.makeText(this@StudentDetailsActivity, "Ученик удален", Toast.LENGTH_SHORT).show()
+                finish() // Закрываем экран и возвращаемся к списку группы
+            } catch (e: Exception) {
+                Toast.makeText(this@StudentDetailsActivity, "Ошибка при удалении: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }

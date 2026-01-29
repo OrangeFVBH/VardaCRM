@@ -7,6 +7,14 @@
 
     <TextView android:id="@+id/tvDetailTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="24sp" android:textStyle="bold" />
     <Button android:id="@+id/btnEditGroup" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Изменить группу" />
+    <Button
+        android:id="@+id/btnDeleteGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Удалить группу"
+        android:backgroundTint="#D32F2F"
+        android:textColor="#FFFFFF" />
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Список учеников:" android:layout_marginTop="16dp" android:textStyle="italic" />
     <androidx.recyclerview.widget.RecyclerView
