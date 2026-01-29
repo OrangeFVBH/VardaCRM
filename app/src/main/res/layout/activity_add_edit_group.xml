@@ -19,7 +19,15 @@
             <Button android:id="@+id/btnAddStudentAction" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Добавить в список" />
         </LinearLayout>
 
-        <Button android:id="@+id/btnConfirm" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Подтвердить" />
+        <Button
+            android:id="@+id/btnConfirm"
+            style="@android:style/Widget.Material.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#f542b9"
+            android:text="Подтвердить"
+            android:textColor="#FAF5F5" />
         <Button android:id="@+id/btnCancel" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Отмена" />
     </LinearLayout>
 </ScrollView>
